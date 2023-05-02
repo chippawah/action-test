@@ -1,0 +1,38 @@
+# CD pipeline 
+# triggered when a PR is merged to main branch
+# 
+# Gets new repository version for tagging purposes
+#
+# Tags git repository with new version number
+# 
+# Builds docker image tagged with version number
+# Pushes image to ECR 
+
+# TODO: once ArgoCD+Kustomize are set up, add workflow to update Kustomize file with new image
+
+name: cd
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - 'main'
+    paths-ignore:
+      - '.github/workflows/**'
+      - 'kustomize/**'
+      - 'docker-compose.yml'
+      - 'Brewfile'
+      - 'Brewfile.lock.json'
+      - '.nvmrc'
+      - '.env.example'
+  workflow_dispatch:
+
+jobs:
+  update_kustomize_image:
+    needs: build-and-push-to-ecr
+    if: github.event.pull_request.merged == true
+    uses: ./.github/workflows/update_image_in_kustomize.yml
+    with:
+      tagged_image: "FOO/BAR:TAP"
+      deployment_yaml_path: "./test_change_file.yaml"
+    secrets: inherit
