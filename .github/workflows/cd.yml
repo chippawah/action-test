@@ -29,8 +29,6 @@ on:
 
 jobs:
   update_kustomize_image:
-    needs: build-and-push-to-ecr
-    if: github.event.pull_request.merged == true
     uses: ./.github/workflows/update_image_in_kustomize.yml
     with:
       tagged_image: "FOO/BAR:TAP"
