@@ -13,4 +13,4 @@ spec:
               secretProviderClass: development-access-server-aws-secrets
       containers:
         - name: access-server
-          image: REPLACE_ME
+          image: "FOO/BAR:TAP-5"
