@@ -29,6 +29,6 @@ jobs:
   update_kustomize_image:
     uses: ./.github/workflows/update_image_in_kustomize.yml
     with:
-      tagged_image: "FOO/BAR:TAP"
+      tagged_image: "FOO/BAR:TAP-2"
       deployment_yaml_path: "test_change_file.yaml"
     secrets: inherit
