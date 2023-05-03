@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: 'Checkout Source Code'
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.MY_PAT }}
       - name: 'Find and Replace Image Definition'
         uses: jacobtomlinson/gha-find-replace@v3
         with:
