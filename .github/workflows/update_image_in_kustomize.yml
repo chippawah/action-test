@@ -26,3 +26,5 @@ jobs:
           regex: true
       - name: 'Echo the changed file'
         run: cat test_change_file.yaml
+      - name: 'Commit the Change'
+        uses: stefanzweifel/git-auto-commit-action@v4
