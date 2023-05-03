@@ -12,6 +12,9 @@
 
 name: cd
 on:
+  push:
+    paths:
+      - 'test_change_file.yaml'
   pull_request:
     types:
       - closed
@@ -19,12 +22,6 @@ on:
       - 'main'
     paths-ignore:
       - '.github/workflows/**'
-      - 'kustomize/**'
-      - 'docker-compose.yml'
-      - 'Brewfile'
-      - 'Brewfile.lock.json'
-      - '.nvmrc'
-      - '.env.example'
   workflow_dispatch:
 
 jobs:
