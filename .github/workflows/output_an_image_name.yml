@@ -16,14 +16,14 @@ jobs:
       tagged_image: ${{ steps.set_the_output.tagged_image }}
     steps:
     - name: echo_the_input
-      run: "echo 'Input Version: ${{ inputs.version }}'"
+      run: echo 'Input Version: ${{ inputs.version }}'
     - name: echo_the_output_file_var
-      run: "echo 'GITHUB_OUTPUT env var: $GITHUB_OUTPUT'"
+      run: echo 'GITHUB_OUTPUT env var: $GITHUB_OUTPUT'
     - name: set_the_output
-      run: "echo 'tagged_image=FOO/BAR:${{ inputs.version }}' >> $GITHUB_OUTPUT"
+      run: echo 'tagged_image=FOO/BAR:${{ inputs.version }}' >> $GITHUB_OUTPUT
   echo_previous_job_output:
     runs-on: ubuntu-latest
     needs: set_image_name
     steps:
       - name: echo_the_tagged_image_within_workflow
-        run: "echo '\"set_image_name\" job output: ${{ needs.set_image_name.outputs.tagged_image }}'"
+        run: echo 'set_image_name job output: ${{ needs.set_image_name.outputs.tagged_image }}'
