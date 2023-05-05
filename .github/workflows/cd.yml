@@ -45,7 +45,7 @@ jobs:
         uses: chippawah/composite-actions/find_and_replace_image@main
         with:
           repo_rw_token: ${{ secrets.MY_PAT }}
-          git_ref: ${{ github.ref }}
+          github_ref: ${{ github.ref }}
           tagged_image: ${{ needs.output_an_image_name.outputs.tagged_image }}
           deployment_yaml_path: ${{ inputs.deployment_yaml_path }}
     
