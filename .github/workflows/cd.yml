@@ -38,6 +38,7 @@ jobs:
   update_kustomize_image:
     uses: ./.github/workflows/update_kustomize_image.yaml
     needs: output_an_image_name
+    secrets: inherit
     with:
       tagged_image: ${{ needs.output_an_image_name.outputs.tagged_image }}
       deployment_yaml_path: ${{ inputs.deployment_yaml_path }}
