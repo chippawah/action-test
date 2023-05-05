@@ -22,6 +22,7 @@ jobs:
           token: ${{ secrets.MY_PAT }}
           ref: ${{ github.ref }}
   update_image_in_kustomize:
+    needs: checkout_the_source_code
     runs-on: ubuntu-latest
     steps:
       - name: Update the image definition in the YAML
