@@ -43,6 +43,7 @@ jobs:
       tagged_image: ${{ needs.output_an_image_name.outputs.tagged_image }}
       deployment_yaml_path: ${{ inputs.deployment_yaml_path }}
   tag_the_repo:
+    runs-on: ubuntu-latest
     steps:
       - name: tag
         uses: chippawah/composite-actions/git_tag@main
