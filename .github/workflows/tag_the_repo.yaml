@@ -1,0 +1,24 @@
+name: tag_the_repo
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: 'The version for the image'
+        type: string
+        required: true
+        default: 'latest'
+jobs:
+  update_image_in_kustomize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout Source Code'
+        id: checkout_source_code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.MY_PAT }}
+          ref: ${{ github.ref }}
+      - name: Update the image definition in the YAML
+        id: find_and_replace_image
+        uses: chippawah/composite-actions/find_and_replace_image@main
+        with:
+          version: ${{ inputs.version }}
