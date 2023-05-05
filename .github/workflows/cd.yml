@@ -36,25 +36,10 @@ jobs:
           version: ${{ inputs.version }}
           registry: ${{ inputs.registry }}
           repository: ${{ inputs.repository }}
-  # echo_image:
-  #   runs-on: ubuntu-latest
-  #   needs: output_an_image_name
-  #   steps:
-  #       - name: Echo previous job output
-  #         env:
-  #           TAGGED_IMAGE: ${{ needs.output_an_image_name.outputs.tagged_image }}
-  #         run: echo $TAGGED_IMAGE
-  #         shell: bash
   update_kustomize_image:
-    runs-on: ubuntu-latest
+    uses: .github/workflows/update_kustomize_image.yaml
     needs: output_an_image_name
-    steps:
-      - name: Update the image definition in the YAML
-        id: find_and_replace_image
-        uses: chippawah/composite-actions/find_and_replace_image@main
-        with:
-          repo_rw_token: ${{ secrets.MY_PAT }}
-          github_ref: ${{ github.ref }}
-          tagged_image: ${{ needs.output_an_image_name.outputs.tagged_image }}
-          deployment_yaml_path: ${{ inputs.deployment_yaml_path }}
-    
+    with:
+      tagged_image: ${{ needs.output_an_image_name.outputs.tagged_image }}
+      deployment_yaml_path: ${{ inputs.deployment_yaml_path }}
+      
