@@ -8,7 +8,7 @@ on:
         required: true
         default: 'latest'
 jobs:
-  update_image_in_kustomize:
+  tag_the_repo:
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout Source Code'
@@ -19,6 +19,6 @@ jobs:
           ref: ${{ github.ref }}
       - name: Update the image definition in the YAML
         id: find_and_replace_image
-        uses: chippawah/composite-actions/find_and_replace_image@main
+        uses: chippawah/composite-actions/git_tag@main
         with:
           version: ${{ inputs.version }}
