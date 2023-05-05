@@ -13,4 +13,4 @@ spec:
               secretProviderClass: development-access-server-aws-secrets
       containers:
         - name: access-server
-          image: ".foobar-hosters.com/BAR_image_repo:latest"".foobar-hosters.com/BAR_image_repo:latest"
+          image: ".foobar-hosters.com/BAR_image_repo:latest"
