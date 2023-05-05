@@ -17,8 +17,8 @@ jobs:
         with:
           token: ${{ secrets.MY_PAT }}
           ref: ${{ github.ref }}
-      - name: Update the image definition in the YAML
-        id: find_and_replace_image
+      - name: 'Add and push new tag'
+        id: tag_the_repo
         uses: chippawah/composite-actions/git_tag@main
         with:
           version: ${{ inputs.version }}
