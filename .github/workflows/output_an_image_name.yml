@@ -13,13 +13,15 @@ jobs:
   set_image_name:
     runs-on: ubuntu-latest
     outputs:
-      tagged_image: ${{ steps.set_the_output.tagged_image }}
+      tagged_image: ${{ steps.set_the_output.outputs.tagged_image }}
     steps:
-      - name: echo_the_input
+      - name: Echo the input
+        id: echo_the_input
         run: |
           echo "Input Version: ${{ inputs.version }}"
         shell: bash
-      - name: echo_the_output_file_var
+      - name: Echo the output file var path
+        id: echo_the_output_file_var
         run: |
           echo "GITHUB_OUTPUT env var: $GITHUB_OUTPUT"
         shell: bash
@@ -27,11 +29,13 @@ jobs:
         run: |
           cat $GITHUB_OUTPUT
         shell: bash
-      - name: set_the_output
+      - name: Set the output
+        id: set_the_output
         run: |
           echo "tagged_image=FOO/BAR:${{ inputs.version }}" >> $GITHUB_OUTPUT  
         shell: bash
-      - name: cat_the_output_after_setting
+      - name: Print the output file
+        id: cat_the_output_after_setting
         run: |
           cat $GITHUB_OUTPUT
         shell: bash
@@ -39,7 +43,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: set_image_name
     steps:
-      - name: echo_the_tagged_image_within_workflow
+      - name: Echo output from previous job in workflow
+        id: echo_the_tagged_image_within_workflow
         run: |
           echo "\"set_image_name\" job output: ${{ needs.set_image_name.outputs.tagged_image }}"
         shell: bash
