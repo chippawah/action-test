@@ -17,11 +17,11 @@ jobs:
     steps:
       - name: echo_the_input
         run: |
-          echo 'Input Version: ${{ inputs.version }}'
+          echo "Input Version: ${{ inputs.version }}"
         shell: bash
       - name: echo_the_output_file_var
         run: |
-          echo 'GITHUB_OUTPUT env var: $GITHUB_OUTPUT'
+          echo "GITHUB_OUTPUT env var: $GITHUB_OUTPUT"
         shell: bash
       - name: cat_the_output_var
         run: |
@@ -29,7 +29,7 @@ jobs:
         shell: bash
       - name: set_the_output
         run: |
-          echo 'tagged_image=FOO/BAR:${{ inputs.version }}' >> $GITHUB_OUTPUT  
+          echo "tagged_image=FOO/BAR:${{ inputs.version }}" >> $GITHUB_OUTPUT  
         shell: bash
       - name: cat_the_output_after_setting
         run: |
@@ -41,5 +41,5 @@ jobs:
     steps:
       - name: echo_the_tagged_image_within_workflow
         run: |
-          echo '"set_image_name" job output: ${{ needs.set_image_name.outputs.tagged_image }}'
+          echo "\"set_image_name\" job output: ${{ needs.set_image_name.outputs.tagged_image }}"
         shell: bash
