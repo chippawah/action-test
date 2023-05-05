@@ -21,4 +21,4 @@ jobs:
         id: tag_the_repo
         uses: chippawah/composite-actions/git_tag@main
         with:
-          version: ${{ inputs.version }}
+          repo_version: ${{ inputs.version }}
