@@ -1,29 +1,38 @@
 name: cd
 on:
-  push:
-    branches:
-      - 'main'
-  pull_request:
-    types:
-      - closed
-    branches:
-      - 'main'
   workflow_dispatch:
     inputs:
       version:
+        description: 'The version for the image'
         type: string
         required: true
         default: 'latest'
+      registry:
+        description: 'The registry where the image repository is.'
+        type: string
+        required: true
+        default: 'FOO_image_registry.com'
+      repository:
+        description: 'The repository name for the image.'
+        type: string
+        required: true
+        default: 'BAR_image_repo'
+      deployment_yaml_path:
+        description: 'The path to the deployment.yaml file that defines the image used for the container'
+        required: true
+        type: string
+        default: 'test_change_file.yaml'
 
 jobs:
   output_an_image_name:
-    uses: ./.github/workflows/output_an_image_name.yml
+    uses: chippawah/composite-actions/append_new_version_to_image@main
     with:
       version: ${{ inputs.version }}
+      registry: ${{ inputs.registry }}
+      repository: ${{ inputs.repository }}
   update_kustomize_image:
     needs: output_an_image_name
-    uses: ./.github/workflows/update_image_in_kustomize.yml
+    uses: chippawah/composite-actions/find_and_replace_image@main
     with:
       tagged_image: ${{ needs.output_an_image_name.outputs.tagged_image }}
-      deployment_yaml_path: "test_change_file.yaml"
-    secrets: inherit
+      deployment_yaml_path: ${{ inputs.deployment_yaml_path }}
