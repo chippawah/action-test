@@ -43,7 +43,7 @@ jobs:
         - name: Echo previous job output
           env:
             TAGGED_IMAGE: ${{ needs.output_an_image_name.outputs.tagged_image }}
-          run: echo $TAGGED_IMAGE
+          run: echo TAGGED_IMAGE
           shell: bash
   # update_kustomize_image:
   #   runs-on: ubuntu-latest
