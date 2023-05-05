@@ -26,11 +26,21 @@ on:
     paths-ignore:
       - '.github/workflows/**'
   workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        required: true
+        default: 'latest'
 
 jobs:
+  output_an_image_name:
+    uses: ./.github/workflows/output_an_image_name.yml
+    with:
+      version: ${{ inputs.version }}
   update_kustomize_image:
+    needs: output_an_image_name
     uses: ./.github/workflows/update_image_in_kustomize.yml
     with:
-      tagged_image: "FOO/BAR:TAP-5"
+      tagged_image: ${{ needs.output_an_image_name.outputs.tagged_image }}
       deployment_yaml_path: "test_change_file.yaml"
     secrets: inherit
