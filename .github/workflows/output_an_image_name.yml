@@ -25,9 +25,10 @@ jobs:
         run: |
           echo "GITHUB_OUTPUT env var: $GITHUB_OUTPUT"
         shell: bash
-      - name: cat_the_output_var
+      - name: Cat the output file
+        id: cat_the_output_var
         run: |
-          cat $GITHUB_OUTPUT
+          echo $(cat $GITHUB_OUTPUT)
         shell: bash
       - name: Set the output
         id: set_the_output
@@ -37,7 +38,7 @@ jobs:
       - name: Print the output file
         id: cat_the_output_after_setting
         run: |
-          cat $GITHUB_OUTPUT
+          echo $(cat $GITHUB_OUTPUT)
         shell: bash
   echo_previous_job_output:
     runs-on: ubuntu-latest
