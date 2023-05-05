@@ -12,7 +12,7 @@ on:
         type: string
         default: 'test_change_file.yaml'
 jobs:
-  update_image_in_kustomize:
+  checkout_the_source_code:
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout Source Code'
@@ -21,12 +21,19 @@ jobs:
         with:
           token: ${{ secrets.MY_PAT }}
           ref: ${{ github.ref }}
+  update_image_in_kustomize:
+    runs-on: ubuntu-latest
+    steps:
       - name: Update the image definition in the YAML
         id: find_and_replace_image
         uses: chippawah/composite-actions/find_and_replace_image@main
         with:
           tagged_image: ${{ inputs.tagged_image }}
           deployment_yaml_path: ${{ inputs.deployment_yaml_path }}
+  commit_the_chane:
+    needs: update_image_in_kustomize
+    runs-on: ubuntu-latest
+    steps:
       - name: 'Commit the Change'
         id: commit_the_change
         uses: stefanzweifel/git-auto-commit-action@v4

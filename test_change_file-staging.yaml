@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: access-server-deployment
+spec:
+  template:
+    spec:
+      volumes:
+        - name: secrets-store
+          csi:
+            volumeAttributes:
+              # Changing this because the provider class gets renamed per env with a prefix
+              secretProviderClass: development-access-server-aws-secrets
+      containers:
+        - name: access-server
+          image: "FOO_image_registry.foobar-hosters.com/BAR_image_repo:latest"
