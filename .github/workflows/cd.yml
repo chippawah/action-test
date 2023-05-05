@@ -15,9 +15,6 @@ on:
   push:
     branches:
       - 'main'
-    paths:
-      - 'test_change_file.yaml'
-      - 'update_image_in_kustomize.yml'
   pull_request:
     types:
       - closed
