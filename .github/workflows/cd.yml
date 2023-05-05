@@ -1,15 +1,3 @@
-# CD pipeline 
-# triggered when a PR is merged to main branch
-# 
-# Gets new repository version for tagging purposes
-#
-# Tags git repository with new version number
-# 
-# Builds docker image tagged with version number
-# Pushes image to ECR 
-
-# TODO: once ArgoCD+Kustomize are set up, add workflow to update Kustomize file with new image
-
 name: cd
 on:
   push:
@@ -20,8 +8,6 @@ on:
       - closed
     branches:
       - 'main'
-    paths-ignore:
-      - '.github/workflows/**'
   workflow_dispatch:
     inputs:
       version:
