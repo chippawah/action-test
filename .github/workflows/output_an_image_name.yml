@@ -15,7 +15,9 @@ jobs:
       tagged_image: ${{ steps.set_the_output.tagged_image }}
     steps:
     - name: echo_the_input
-      run: "echo 'Input Version: ${{ inputs.version }}'"
+      env:
+        VERSION: ${{ inputs.version }}
+      run: "echo 'Input Version: $VERSION'"
     - name: echo_the_output_file_var
       run: "echo 'GITHUB_OUTPUT env var: $GITHUB_OUTPUT'"
     - name: set_the_output
