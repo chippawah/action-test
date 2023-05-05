@@ -11,7 +11,7 @@ on:
         description: 'The registry where the image repository is.'
         type: string
         required: true
-        default: 'FOO_image_registry.com'
+        default: 'FOO_image_registry.foobar-hosters.com'
       repository:
         description: 'The repository name for the image.'
         type: string
