@@ -13,4 +13,4 @@ spec:
               secretProviderClass: development-access-server-aws-secrets
       containers:
         - name: access-server
-          image: ".com/BAR_image_repo:latest"
+          image: "$"FOO_image_registry.com/BAR_image_repo:latest""
