@@ -36,6 +36,6 @@ jobs:
         id: open_a_pr
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.MY_PAT }}
+          token: ${{ secrets.PR_TOKEN }}
           commit-message: "Promotion of ${{ steps.get_lower_env_image.outputs.tagged_image }} from ${{ inputs.base_env }} to ${{ inputs.promotion_env }}"
       
