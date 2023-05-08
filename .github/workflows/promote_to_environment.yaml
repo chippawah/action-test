@@ -25,7 +25,7 @@ jobs:
           ref: ${{ github.ref }}
       - name: Get base env image name
         id: get_lower_env_image
-        run: echo "tagged_image=$(sed -n -e 's/.*image://p' kustomize/overlays/${{ inputs.base_env }}/deployment.yaml)" >> $GITHUB_OUTPUT
+        run: echo $(sed -n -e 's/.*image://p' test_change_file.yaml) | cut -c2- | rev | cut -c2- |rev
       - name: Update the image definition in the YAML
         id: find_and_replace_image
         uses: chippawah/composite-actions/find_and_replace_image@main
@@ -37,5 +37,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.PR_TOKEN }}
+          branch: "promoting-${{ inputs.base_env }}-to-${{ inputs.promotion_env }}"
+          body: "Automatic changes created by the `promote_to_environment` github action."
           commit-message: "Promotion of ${{ steps.get_lower_env_image.outputs.tagged_image }} from ${{ inputs.base_env }} to ${{ inputs.promotion_env }}"
       
