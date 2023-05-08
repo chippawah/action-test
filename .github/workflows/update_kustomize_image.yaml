@@ -10,7 +10,7 @@ on:
         description: 'The path to the deployment.yaml file that defines the image used for the container'
         required: true
         type: string
-        default: 'test_change_file.yaml'
+        default: 'kustomize/overlays/dev/deployment.yaml'
 jobs:
   update_image_in_kustomize:
     runs-on: ubuntu-latest

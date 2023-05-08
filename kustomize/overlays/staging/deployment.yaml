@@ -10,7 +10,7 @@ spec:
           csi:
             volumeAttributes:
               # Changing this because the provider class gets renamed per env with a prefix
-              secretProviderClass: development-some-app-server-aws-secrets
+              secretProviderClass: staging-some-app-server-aws-secrets
       containers:
         - name: some-app-server
           image: "FOO_image_registry.foobar-hosters.com/BAR_image_repo:latest"

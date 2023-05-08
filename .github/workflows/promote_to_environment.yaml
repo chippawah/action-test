@@ -25,9 +25,7 @@ jobs:
           ref: ${{ github.ref }}
       - name: Get base env image name
         id: get_lower_env_image
-        uses: chippawah/composite-actions/get_image_name_from_manifest@main
-        with:
-          deployment_yaml_path: "kustomize/overlays/${{ inputs.base_env }}/deployment.yaml"
+        run: echo 'tagged_image=$(sed -n -e 's/.*image://p' kustomize/overlays/${{ inputs.base_env }}/deployment.yaml) >> $GITHUB_OUTPUT
       - name: Update the image definition in the YAML
         id: find_and_replace_image
         uses: chippawah/composite-actions/find_and_replace_image@main
