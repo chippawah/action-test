@@ -25,7 +25,7 @@ jobs:
           ref: ${{ github.ref }}
       - name: Get base env image name
         id: get_lower_env_image
-        run: echo $(sed -n -e 's/.*image://p' test_change_file.yaml) | cut -c2- | rev | cut -c2- | rev >> $GITHUB_OUTPUT
+        run: echo $(echo $(sed -n -e 's/.*image://p' test_change_file.yaml) | cut -c2- | rev | cut -c2- | rev) >> $GITHUB_OUTPUT
       - name: Update the image definition in the YAML
         id: find_and_replace_image
         uses: chippawah/composite-actions/find_and_replace_image@main
