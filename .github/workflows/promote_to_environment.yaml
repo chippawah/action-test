@@ -5,7 +5,7 @@ on:
       base_env:
         required: true
         type: string
-        description: 'The full image name including registry, repo, and tag.'
+        description: 'The base env that will be use to promote from'
         default: 'dev'
       promotion_env:
         description: 'The higher environment that the image will be promoted to.'
@@ -37,5 +37,5 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "Promotion of ${{ steps.get_lower_env_image.outputs.image }} from ${{ inputs.base_env }} to ${{ inputs.promotion_env }}"
+          commit-message: "Promotion of ${{ steps.get_lower_env_image.outputs.tagged_image }} from ${{ inputs.base_env }} to ${{ inputs.promotion_env }}"
       
