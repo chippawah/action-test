@@ -13,4 +13,4 @@ spec:
               secretProviderClass: staging-some-app-server-aws-secrets
       containers:
         - name: some-app-server
-          image: "FOO_image_registry.foobar-hosters.com/BAR_image_repo:latest"
+          image: "FOO_image_registry.foobar-hosters.com/BAR_image_repo:super-latest"
