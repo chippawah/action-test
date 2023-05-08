@@ -1,0 +1,43 @@
+name: promote_to_env
+on:
+  workflow_dispatch:
+    inputs:
+      base_env:
+        required: true
+        type: string
+        description: 'The full image name including registry, repo, and tag.'
+        default: 'dev'
+      promotion_env:
+        description: 'The higher environment that the image will be promoted to.'
+        required: true
+        type: string
+        default: 'staging'
+      
+jobs:
+  promote_image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout Source Code'
+        id: checkout_source_code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }} # Using GH token here because we're commiting to a non protected branch for the PR.
+          ref: ${{ github.ref }}
+      - name: Get base env image name
+        id: get_lower_env_image
+        uses: chippawah/composite-actions/get_image_name_from_manifest@main
+        with:
+          deployment_yaml_path: "kustomize/overlays/${{ inputs.base_env }}/deployment.yaml"
+      - name: Update the image definition in the YAML
+        id: find_and_replace_image
+        uses: chippawah/composite-actions/find_and_replace_image@main
+        with:
+          tagged_image: ${{ steps.get_lower_env_image.outputs.tagged_image }}
+          deployment_yaml_path: "kustomize/overlays/${{ inputs.promotion_env }}/deployment.yaml"
+      - name: 'Open a PR'
+        id: open_a_pr
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Promotion of ${{ steps.get_lower_env_image.outputs.image }} from ${{ inputs.base_env }} to ${{ inputs.promotion_env }}"
+      
