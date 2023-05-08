@@ -26,7 +26,7 @@ jobs:
       - name: Get base env image name
         id: get_lower_env_image
         run: |
-          BASE_IMAGE=$(sed -n -e 's/.*image://p' kustomize/overlays/${{ inputs.base_env }}/deployment.yaml) | cut -c2- | rev | cut -c2- | rev
+          BASE_IMAGE=$(echo $(sed -n -e 's/.*image://p' kustomize/overlays/${{ inputs.base_env }}/deployment.yaml) | cut -c2- | rev | cut -c2- | rev)
           echo "tagged_image=$BASE_IMAGE" >> $GITHUB_OUTPUT
       - name: Update the image definition in the YAML
         id: find_and_replace_image
