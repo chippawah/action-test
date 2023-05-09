@@ -15,31 +15,6 @@ on:
       
 jobs:
   promote_image:
-    runs-on: ubuntu-latest
-    steps:
-      - name: 'Checkout Source Code'
-        id: checkout_source_code
-        uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }} # Using GH token here because we're commiting to a non protected branch for the PR.
-          ref: ${{ github.ref }}
-      - name: Get base env image name
-        id: get_lower_env_image
-        run: |
-          BASE_IMAGE=$(echo $(sed -n -e 's/.*image://p' kustomize/overlays/${{ inputs.base_env }}/deployment.yaml) | cut -c2- | rev | cut -c2- | rev)
-          echo "tagged_image=$BASE_IMAGE" >> $GITHUB_OUTPUT
-      - name: Update the image definition in the YAML
-        id: find_and_replace_image
-        uses: chippawah/composite-actions/find_and_replace_image@main
-        with:
-          tagged_image: ${{ steps.get_lower_env_image.outputs.tagged_image }}
-          deployment_yaml_path: "kustomize/overlays/${{ inputs.promotion_env }}/deployment.yaml"
-      - name: 'Open a PR'
-        id: open_a_pr
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.PR_TOKEN }}
-          branch: "promoting-${{ inputs.base_env }}-to-${{ inputs.promotion_env }}"
-          body: "Automatic changes created by the `promote_to_environment` github action."
-          commit-message: "Promotion of ${{ steps.get_lower_env_image.outputs.tagged_image }} from ${{ inputs.base_env }} to ${{ inputs.promotion_env }}"
-      
+    uses: chippawah/composite-actions/.github/workflows/promote-to-env.yaml@main
+    secrets:
+      PR_TOKEN: ${{ secrets.PR_TOKEN }}
