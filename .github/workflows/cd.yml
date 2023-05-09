@@ -27,7 +27,7 @@ on:
         default: 'kustomize/overlays/dev/deployment.yaml'
 jobs:
   cd:
-    uses: chippawah/composite-actions/.github/workflows/cd@main
+    uses: chippawah/composite-actions/.github/workflows/cd.yaml@main
     with:
       repository: ${{ inputs.repository }}
       version: ${{ inputs.version }}
