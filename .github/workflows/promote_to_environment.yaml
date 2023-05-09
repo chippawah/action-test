@@ -15,6 +15,6 @@ on:
       
 jobs:
   promote_image:
-    uses: chippawah/composite-actions/.github/workflows/promote-to-env.yaml@main
+    uses: chippawah/composite-actions/.github/workflows/promote-image-to-env.yaml@main
     secrets:
       PR_TOKEN: ${{ secrets.PR_TOKEN }}
