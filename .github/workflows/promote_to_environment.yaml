@@ -2,12 +2,12 @@ name: promote_to_env
 on:
   workflow_dispatch:
     inputs:
-      base_env:
+      base-env:
         required: true
         type: string
         description: 'The base env that will be use to promote from'
         default: 'dev'
-      promotion_env:
+      promotion-env:
         description: 'The higher environment that the image will be promoted to.'
         required: true
         type: string
@@ -18,3 +18,6 @@ jobs:
     uses: chippawah/composite-actions/.github/workflows/promote-image-to-env.yaml@main
     secrets:
       PR_TOKEN: ${{ secrets.PR_TOKEN }}
+    with:
+      base-env: ${{ inputs.base-env }}
+      promotion-env: ${{ inputs.promotion-env }}
