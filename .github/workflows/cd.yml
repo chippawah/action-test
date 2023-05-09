@@ -1,5 +1,8 @@
 name: cd
 on:
+  # pull_request:
+  #   branches:
+  #     - main
   workflow_dispatch:
     inputs:
       version:
@@ -23,29 +26,39 @@ on:
         type: string
         default: 'kustomize/overlays/dev/deployment.yaml'
 jobs:
-  output_an_image_name:
-    runs-on: ubuntu-latest
-    outputs:
-      tagged-image: ${{ steps.build_image_name.outputs.tagged-image }}
-    steps:
-      - name: Build Image Full Name
-        id: build_image_name
-        uses: chippawah/composite-actions/append_new_version_to_image@main
-        with:
-          version: ${{ inputs.version }}
-          registry: ${{ inputs.registry }}
-          repository: ${{ inputs.repository }}
-  update_kustomize_image:
-    uses: chippawah/composite-actions/.github/workflows/update-image-and-commit.yaml@main
-    needs: output_an_image_name
+  cd:
+    uses: chippawah/composite-actions/.github/workflows/cd@main
     with:
-      tagged-image: ${{ needs.output_an_image_name.outputs.tagged-image }}
+      repository: ${{ inputs.repository }}
+      version: ${{ inputs.version }}
+      registry: ${{ inputs.registry }}
       deployment-yaml-path: ${{ inputs.deployment-yaml-path }}
     secrets:
-      COMMIT_TOKEN: ${{ secrets.COMMIT_TOKEN }}   
-  tag_the_repo:
-    secrets: inherit
-    uses: ./.github/workflows/tag_the_repo.yaml
-    with:
-      version: ${{ inputs.version }}
+      COMMIT_TOKEN: ${{ secrets.COMMIT_TOKEN }}
+# jobs:
+#   output_an_image_name:
+#     runs-on: ubuntu-latest
+#     outputs:
+#       tagged-image: ${{ steps.build_image_name.outputs.tagged-image }}
+#     steps:
+#       - name: Build Image Full Name
+#         id: build_image_name
+#         uses: chippawah/composite-actions/append_new_version_to_image@main
+#         with:
+#           version: ${{ inputs.version }}
+#           registry: ${{ inputs.registry }}
+#           repository: ${{ inputs.repository }}
+#   update_kustomize_image:
+#     uses: chippawah/composite-actions/.github/workflows/update-image-and-commit.yaml@main
+#     needs: output_an_image_name
+#     with:
+#       tagged-image: ${{ needs.output_an_image_name.outputs.tagged-image }}
+#       deployment-yaml-path: ${{ inputs.deployment-yaml-path }}
+#     secrets:
+#       COMMIT_TOKEN: ${{ secrets.COMMIT_TOKEN }}   
+#   tag_the_repo:
+#     secrets: inherit
+#     uses: ./.github/workflows/tag_the_repo.yaml
+#     with:
+#       version: ${{ inputs.version }}
 
