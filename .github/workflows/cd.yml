@@ -36,7 +36,7 @@ jobs:
           registry: ${{ inputs.registry }}
           repository: ${{ inputs.repository }}
   update_kustomize_image:
-    uses: chippawah/composite-actions/reusable_workflows/update-image-and-commit.yaml@main
+    uses: chippawah/composite-actions/.github/workflows/update-image-and-commit.yaml@main
     needs: output_an_image_name
     with:
       tagged_image: ${{ needs.output_an_image_name.outputs.tagged_image }}
