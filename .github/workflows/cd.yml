@@ -36,12 +36,13 @@ jobs:
           registry: ${{ inputs.registry }}
           repository: ${{ inputs.repository }}
   update_kustomize_image:
-    uses: ./.github/workflows/update_kustomize_image.yaml
+    uses: chippawah/composite-actions/reusable_workflows/update-image-and-commit.yaml@main
     needs: output_an_image_name
-    secrets: inherit
     with:
       tagged_image: ${{ needs.output_an_image_name.outputs.tagged_image }}
       deployment_yaml_path: ${{ inputs.deployment_yaml_path }}
+    secrets:
+      COMMIT_TOKEN: ${{ secrets.COMMIT_TOKEN }}   
   tag_the_repo:
     secrets: inherit
     uses: ./.github/workflows/tag_the_repo.yaml
